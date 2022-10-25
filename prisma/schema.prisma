@@ -2,10 +2,33 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model Thread {
+  id      String @id @default(cuid())
+  title   String @db.VarChar(255)
+  content String @db.VarChar(5000)
+
+  createdAt DateTime @default(now())
+
+  Posts Post[]
+}
+
+model Post {
+  id String @id @default(cuid())
+
+  content String @db.VarChar(5000)
+
+  Thread   Thread @relation(fields: [threadId], references: [id])
+  threadId String
+
+  createdAt DateTime @default(now())
 }
