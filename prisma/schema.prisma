@@ -31,4 +31,7 @@ model Post {
   threadId String
 
   createdAt DateTime @default(now())
+
+  childPosts         Post[] @relation("childPosts")
+  childPostsRelation Post[] @relation("childPosts")
 }
