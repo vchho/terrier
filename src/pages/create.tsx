@@ -23,21 +23,51 @@ type Thread = {
 const CreateThread = () =>
   //   props: InferGetServerSidePropsType<typeof getServerSideProps>
   {
-    //   console.log(props.threads);
     return (
       <>
         <Navbar />
-
-        <h1 className="text-slate-900 font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-center">
-          Create Works
-        </h1>
-        <div>
-          {/* {props.threads.map((thread) => (
-          <div key={thread.id}>
-            <h2>{thread.title}</h2>
-            <p>{thread.content}</p>
+        <div className="antialiased p-6 min-h-screen items-stretch relative">
+          <div className="max-w-xl mx-auto py-12 md:max-w-2xl">
+            <h2 className="text-2xl font-bold">Create your thread</h2>
+            {/* Form */}
+            <form>
+              <div className="mt-8 w-full">
+                <label className="label">
+                  <span className="label-text font-seimbold text-base">
+                    Thread title
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  className="w-full rounded-lg border-gray-500 p-4 pr-12 text-sm shadow-sm"
+                  placeholder="Enter thread title"
+                />
+              </div>
+              <div className="mt-8 w-full">
+                <label className="label">
+                  <span className="label-text font-seimbold text-base">
+                    Your content here
+                  </span>
+                </label>
+                <textarea
+                  className="w-full rounded-lg border-gray-500 p-3 text-sm shadow-sm"
+                  placeholder="Message"
+                  rows={8}
+                  id="message"
+                ></textarea>
+              </div>
+              {/* Create thread button */}
+              <div className="flex items-center my-3">
+                <button
+                  type="submit"
+                  className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
+                >
+                  Create thread
+                </button>
+              </div>
+            </form>
+            {/* End Form */}
           </div>
-        ))} */}
         </div>
       </>
     );
