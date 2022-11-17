@@ -3,6 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { Navbar } from "../components/Navbar";
 import { useForm, SubmitHandler } from "react-hook-form";
+import axios from "axios";
 
 type Thread = {
   id: string;
@@ -35,8 +36,8 @@ const CreateThread = () =>
     } = useForm<FormInputs>();
 
     const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-      // const test = await axios.post('/api/discord', data);
-      console.log("test", data);
+      const test = await axios.post("/api/threads");
+      // console.log("test", data);
 
       // if (test.status === 200) {
       //   router.push(`/tournament`);
