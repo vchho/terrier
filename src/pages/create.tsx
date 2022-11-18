@@ -1,47 +1,37 @@
-import type { InferGetServerSidePropsType, NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import { Navbar } from "../components/Navbar";
-import { useForm, SubmitHandler } from "react-hook-form";
-import axios from "axios";
+import type { InferGetServerSidePropsType, NextPage } from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
+import { Navbar } from '../components/Navbar';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 
-type Thread = {
-  id: string;
-  title: string;
-  content: string;
-  createdAt: string;
-};
-
-type FormInputs = {
+export type FormInputs = {
   threadTitle: string;
   content: string;
 };
 
-// export async function getServerSideProps() {
-//   const threads = await prisma.thread.findMany();
-//   return {
-//     props: {
-//       threads: JSON.parse(JSON.stringify(threads)) as Thread[],
-//     },
-//   };
-// }
-
 const CreateThread = () =>
   //   props: InferGetServerSidePropsType<typeof getServerSideProps>
   {
+    const router = useRouter();
     const {
       register,
       handleSubmit,
-      formState: { errors },
+      formState: { errors, isValid, isDirty },
     } = useForm<FormInputs>();
 
     const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-      const test = await axios.post("/api/threads");
-      // console.log("test", data);
+      try {
+        const result = await axios.post('/api/threads', data);
+        console.log('test', result);
 
-      // if (test.status === 200) {
-      //   router.push(`/tournament`);
-      // }
+        if (result.status === 200) {
+          router.push(`/`);
+        }
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     return (
@@ -62,7 +52,7 @@ const CreateThread = () =>
                   type="text"
                   className="w-full rounded-lg border-gray-500 p-4 pr-12 text-sm shadow-sm"
                   placeholder="Enter thread title"
-                  {...register("threadTitle", { required: true })}
+                  {...register('threadTitle', { required: true })}
                 />
                 {errors.threadTitle && (
                   <p className="text-red-400 pt-1">Thread title required</p>
@@ -79,7 +69,7 @@ const CreateThread = () =>
                   placeholder="Message"
                   rows={8}
                   id="message"
-                  {...register("content", { required: true })}
+                  {...register('content', { required: true })}
                 ></textarea>
                 {errors.content && (
                   <p className="text-red-400 pt-1">Content required</p>
@@ -88,8 +78,13 @@ const CreateThread = () =>
               {/* Create thread button */}
               <div className="flex items-center my-3">
                 <button
+                  disabled={!isDirty || !isValid}
                   type="submit"
-                  className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
+                  className={
+                    !isDirty || !isValid
+                      ? `inline-block rounded-lg disabled:bg-slate-100 px-5 py-3 text-sm font-medium text-white cursor-default`
+                      : `inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white cursor-pointer`
+                  }
                 >
                   Create thread
                 </button>
