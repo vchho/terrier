@@ -2,6 +2,7 @@ import type { InferGetServerSidePropsType, NextPage } from "next";
 import Link from "next/link";
 import { Navbar } from "../components/Navbar";
 import { prisma } from "../utils/prisma";
+import { timeZoneFormatter } from "../utils/timeZoneFormatter";
 
 type Thread = {
   id: string;
@@ -13,8 +14,8 @@ type Thread = {
 export async function getServerSideProps() {
   const threads = await prisma.thread.findMany({
     orderBy: {
-      createdAt: 'desc'
-    }
+      createdAt: "desc",
+    },
   });
 
   return {
@@ -30,12 +31,6 @@ const Home = (
   return (
     <>
       <Navbar />
-      <h1 className="text-slate-900 font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-center">
-        Tailwind Works
-      </h1>
-      <Link href="/create">
-        <a className="bg-gray-300 rounded text-gray-800 p-4">Create A Thread</a>
-      </Link>
       <div className="container mx-auto">
         {props.threads.map((thread) => (
           <>
@@ -51,7 +46,7 @@ const Home = (
                   {thread.content}
                 </p>
                 <p className="leading-relaxed text-base">
-                  Created on: {thread.createdAt}
+                  Created on: {timeZoneFormatter(thread.createdAt)}
                 </p>
                 <a className="mt-3 text-blue-500 inline-flex items-center">
                   Read More
