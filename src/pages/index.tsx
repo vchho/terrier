@@ -48,20 +48,22 @@ const Home = (
                 <p className="leading-relaxed text-base">
                   Created on: {timeZoneFormatter(thread.createdAt)}
                 </p>
-                <a className="mt-3 text-blue-500 inline-flex items-center">
-                  Read More
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    className="w-4 h-4 ml-2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M5 12h14M12 5l7 7-7 7"></path>
-                  </svg>
-                </a>
+                <Link href={`/thread/${thread.id}`}>
+                  <a className="mt-3 text-blue-500 inline-flex items-center">
+                    Read More
+                    <svg
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      className="w-4 h-4 ml-2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7"></path>
+                    </svg>
+                  </a>
+                </Link>
               </div>
             </div>
           </>
