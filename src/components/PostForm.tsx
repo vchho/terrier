@@ -22,10 +22,8 @@ const PostForm = (props: any) => {
       threadId: props.threadId
     }
 
-    console.log('updated data', updatedData)
     try {
       const data = await axios.post(`/api/threads/${props.threadId}`, updatedData);
-      console.log('hey...', data);
     } catch (e) {
       console.error(e);
     }

@@ -62,8 +62,6 @@ const Post = ({ post }: { post: Post }) => {
 };
 
 export const ChildrenPosts = ({ posts }: { posts: Post[] }) => {
-  console.log("props in childrenPosts component", posts);
-
   return (
     <div className="container mx-auto">
       {posts.map((post: Post) => {

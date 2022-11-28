@@ -25,9 +25,7 @@ export default async function handler(
   } else if (req.method === "POST") {
     try {
       const { content, parentId } = req.body;
-      console.log("req.body", req.body);
       const { id } = req.query;
-      console.log('threadId', id);
 
       await prisma.post.create({
         data: {

@@ -22,7 +22,5 @@ export default function formPosts(comments: Array<any>) {
     roots.push(comments[i]);
   }
 
-  console.log('roots', roots);
-
   return roots;
 }

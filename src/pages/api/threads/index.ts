@@ -16,8 +16,6 @@ export default async function handler(
       },
     });
 
-    console.log('post result', result);
-
     return res.status(200).json({ status: 200 });
   }
 }

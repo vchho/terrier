@@ -21,7 +21,6 @@ function Thread() {
   };
   
   useEffect(() => {
-    console.log("render");
     if (!threadId) {
       return;
     }

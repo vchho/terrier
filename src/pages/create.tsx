@@ -24,7 +24,6 @@ const CreateThread = () =>
     const onSubmit: SubmitHandler<FormInputs> = async (data) => {
       try {
         const result = await axios.post('/api/threads', data);
-        console.log('test', result);
 
         if (result.status === 200) {
           router.push(`/`);
