@@ -7,16 +7,18 @@ export const Navbar = () => {
   return (
     <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-gray-900">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
-        <a href="https://flowbite.com/" className="flex items-center">
-          {/* <img
+        <Link href={"/"}>
+          <a className="flex items-center">
+            {/* <img
             src="https://flowbite.com/docs/images/logo.svg"
             className="mr-3 h-6 sm:h-9"
             alt="Flowbite Logo"
           /> */}
-          <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-            Terrier
-          </span>
-        </a>
+            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+              Terrier
+            </span>
+          </a>
+        </Link>
         <button
           data-collapse-toggle="navbar-default"
           type="button"
