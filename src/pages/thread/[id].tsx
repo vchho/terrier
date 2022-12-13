@@ -9,7 +9,7 @@ import { timeZoneFormatter } from "../../utils/timeZoneFormatter";
 
 function Thread() {
   const [thread, setThread] = useState<any>();
-  
+
   const router = useRouter();
 
   const threadId = router.query.id as string;
@@ -19,8 +19,12 @@ function Thread() {
     console.log("data", data.data);
     setThread(data.data);
   };
-  
+
+  /**
+   * - create a hook to update data on submission
+   * */
   useEffect(() => {
+    // https://github.com/vercel/next.js/discussions/11484#discussioncomment-2733666
     if (!threadId) {
       return;
     }
@@ -57,10 +61,11 @@ function Thread() {
               </div>
             </div>
             {/* Reply form */}
-            {threadId && <PostForm threadId={threadId}/>}
+            {threadId && <PostForm threadId={threadId} getData={getData} />}
           </div>
 
-          <ChildrenPosts posts={formPosts(thread?.Posts)}/>
+          {/* Prop drilling grossness 🤮 */}
+          <ChildrenPosts posts={formPosts(thread?.Posts)} getData={getData} />
         </div>
       ) : (
         <div className="container mx-auto">
