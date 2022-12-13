@@ -1,14 +1,27 @@
 import axios from "axios";
+import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { threadId } from "worker_threads";
+import { useThread } from "../hooks/useThread";
 
 type ReplyInputs = {
   content: string;
 };
 
-const PostForm = (props: any) => {
+type PostForm = {
+  parentId?: string;
+  threadId?: string;
+  getData?: any;
+};
+
+const PostForm = (props: PostForm) => {
+  const router = useRouter();
+  const threadId = router.query.id as string;
+  const { getData } = useThread(threadId);
+
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors, isValid, isDirty },
   } = useForm<ReplyInputs>();
@@ -17,13 +30,22 @@ const PostForm = (props: any) => {
     const updatedData = {
       ...data,
       ...(props.parentId && {
-        parentId: props.parentId
+        parentId: props.parentId,
       }),
-      threadId: props.threadId
-    }
+      threadId: props.threadId,
+    };
 
     try {
-      const data = await axios.post(`/api/threads/${props.threadId}`, updatedData);
+      const data = await axios.post(
+        `/api/threads/${props.threadId}`,
+        updatedData
+      );
+
+      if (data.status === 200) {
+        // getData();
+        props.getData(threadId);
+        reset();
+      }
     } catch (e) {
       console.error(e);
     }
