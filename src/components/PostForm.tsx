@@ -2,7 +2,6 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { threadId } from "worker_threads";
-import { useThread } from "../hooks/useThread";
 
 type ReplyInputs = {
   content: string;
@@ -17,7 +16,6 @@ type PostForm = {
 const PostForm = (props: PostForm) => {
   const router = useRouter();
   const threadId = router.query.id as string;
-  const { getData } = useThread(threadId);
 
   const {
     register,
