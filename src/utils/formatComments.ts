@@ -1,7 +1,10 @@
-export default function formPosts(comments: Array<any>) {
+import { Post } from "../components/ChildrenPosts";
+
+export default function formPosts(comments: Post[]) {
+  console.log("comments", comments);
   const map = new Map();
 
-  const roots: Array<any> = [];
+  const roots: Array<Post> = [];
 
   for (let i = 0; i < comments.length; i++) {
     const commentId = comments[i]?.id;
