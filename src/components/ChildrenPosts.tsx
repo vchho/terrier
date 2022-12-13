@@ -2,8 +2,8 @@ import { useState } from "react";
 import { timeZoneFormatter } from "../utils/timeZoneFormatter";
 import PostForm from "./PostForm";
 
-interface Post {
-  children: any[];
+export interface Post {
+  children: Post[];
   content: string;
   createdAt: string;
   id: string;
@@ -26,11 +26,13 @@ function getReplyCountText(count: number) {
 function CommentActions({
   commentId,
   replyCount,
-  threadId
+  threadId,
+  getData,
 }: {
   commentId: string;
   replyCount: number;
   threadId: string;
+  getData?: (threadId: string) => Promise<void>;
 }) {
   const [replying, setReplying] = useState(false);
 
@@ -41,31 +43,50 @@ function CommentActions({
         <button onClick={() => setReplying(!replying)}>Reply</button>
       </div>
 
-      {replying && <PostForm parentId={commentId} threadId={threadId}/>}
+      {replying && (
+        <PostForm parentId={commentId} threadId={threadId} getData={getData} />
+      )}
     </>
   );
 }
 
-const Post = ({ post }: { post: Post }) => {
+const Post = ({
+  post,
+  getData,
+}: {
+  post: Post;
+  getData?: (threadId: string) => Promise<void>;
+}) => {
   return (
     <div className="border border-gray-200 p-6 rounded-lg">
       <h1>{post.content}</h1>
       <p>{timeZoneFormatter(post.createdAt)}</p>
 
-      <CommentActions commentId={post.id} replyCount={post.children.length} threadId={post.threadId}/>
+      <CommentActions
+        commentId={post.id}
+        replyCount={post.children.length}
+        threadId={post.threadId}
+        getData={getData}
+      />
 
       {post.children && post.children.length > 0 && (
-        <ChildrenPosts posts={post.children} />
+        <ChildrenPosts posts={post.children} getData={getData} />
       )}
     </div>
   );
 };
 
-export const ChildrenPosts = ({ posts }: { posts: Post[] }) => {
+export const ChildrenPosts = ({
+  posts,
+  getData,
+}: {
+  posts: Post[];
+  getData?: (threadId: string) => Promise<void>;
+}) => {
   return (
     <div className="container mx-auto">
       {posts.map((post: Post) => {
-        return <Post post={post} key={post.id} />;
+        return <Post post={post} key={post.id} getData={getData} />;
       })}
     </div>
   );
