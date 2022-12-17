@@ -1,7 +1,6 @@
 import { Post } from "../components/ChildrenPosts";
 
 export default function formPosts(comments: Post[]) {
-  console.log("comments", comments);
   const map = new Map();
 
   const roots: Array<Post> = [];
