@@ -32,6 +32,7 @@ model Post {
 
   createdAt DateTime @default(now())
 
-  childPosts         Post[] @relation("childPosts")
-  childPostsRelation Post[] @relation("childPosts")
+  childPosts Post[]  @relation("childPosts")
+  parent     Post?   @relation("childPosts", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  parentId   String?
 }
